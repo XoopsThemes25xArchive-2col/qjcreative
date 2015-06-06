@@ -1,0 +1,28 @@
+<form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
+
+<div id="unameGroup">
+	<div id="unameText" style="padding:5px"><small><{$block.lang_username}></small></div>
+	<div id="unameBox" style="padding:5px"><input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25" /></div>
+</div>
+
+<div id="pwdGroup">
+	<div id="pwdText" style="padding:5px"><small><{$block.lang_password}></small></div>
+	<div id="pwdBox" style="padding:5px"><input type="password" name="pass" size="12" maxlength="32" /></div>
+</div>
+
+<div id="otherGroup" style="padding:5px">
+	<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+    <input type="hidden" name="op" value="login" />
+    <input type="submit" value="<{$block.lang_login}>" /><br />
+    <{$block.sslloginlink}>
+	<p/>
+	<small>
+	<a href="<{$xoops_url}>/user.php#lost"><{$block.lang_lostpass}></a>
+	|
+	<a href="<{$xoops_url}>/register.php"><{$block.lang_registernow}></a>
+	</small>
+
+</div>
+
+    
+</form>

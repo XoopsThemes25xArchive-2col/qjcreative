@@ -1,0 +1,22 @@
+<div class="recentNews">
+	<{foreach item=news from=$block.stories}>
+	<div class="newsdate">
+		<{if $block.sort=='counter'}>
+			<{$news.hits}>
+		<{elseif $block.sort=='published'}>
+			<{$news.date|date_format:"%m-%d-%Y : "}>
+		<{else}>
+			<{$news.rating}>
+		<{/if}>
+		<a href="<{$xoops_url}>/modules/news/article.php?storyid=<{$news.id}>" <{$news.infotips}> class="newstitle"><{$news.title}></a>
+	</div>
+
+	<div class="newteaser">
+		<{$news.teaser}>
+
+	</div>
+	<{/foreach}>
+
+
+</div>
+

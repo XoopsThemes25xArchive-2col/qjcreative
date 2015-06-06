@@ -1,0 +1,128 @@
+
+<div id="forum_header">
+	<div>
+		<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php" class="categorytext"><{$lang_forum_index}></a> 
+		- <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>" class="categorytext"><{$category.title}></a>
+		<{if $parent_forum}>
+		- <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>" class="categorytext"><{$parent_name}></a>
+		- <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" class="categorytext"><{$forum_name}></a>
+		<{else}>
+		- <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" class="categorytext"><{$forum_name}></a>
+		<{/if}>
+		- <strong><{$topic_title}></strong>
+	</div>
+</div>
+
+<div class="clear"></div>
+
+
+<{if $topic_poll}>
+	<{if $topic_pollresult}> 
+		<{include file="db:newbb_poll_results.html" poll=$poll}>
+	<{else}> 
+		<{include file="db:newbb_poll_view.html" poll=$poll}> 
+	<{/if}>
+<{/if}>
+
+<div class="clear"></div>
+
+<div style="padding:5px;">
+	<{$forum_reply}> &nbsp; <{$forum_addpoll}> &nbsp;<{$forum_post_or_register}>
+</div>
+
+<div class="clear"></div>
+
+<div style="padding: 0px;float: right; text-align:right;">
+	<{$forum_page_nav}>
+</div>
+
+<div class="clear"></div>
+
+<div style="width:100%; text-align: left; padding: 5px;">
+	
+	<{if $rating_enable}>
+
+	<span class="smallwhite"><{$smarty.const._MD_RATE}> : </span> &nbsp;
+	<a href="ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5" class="rate"> 5 </a> &nbsp; 
+	<a href="ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4" class="rate"> 4 </a> &nbsp; 
+	<a href="ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=3" class="rate"> 3 </a> &nbsp; 
+	<a href="ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=2" class="rate"> 2 </a> &nbsp; 
+	<a href="ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1" class="rate"> 1 </a> &nbsp; 
+	&nbsp; 
+	<span class="smallwhite"> 5 = Excellent, 1 = Poor</span>
+	<{/if}>
+	
+
+	
+	<{if $viewer_level gt 1}>
+	&nbsp; &nbsp; &nbsp; &nbsp; <span class="smallwhite"><{$smarty.const._MD_TOPICOPTION}> : </span> &nbsp;
+	<{foreach item=act from=$admin_actions}>
+    <a href="<{$act.link}>" class="rate">
+	<{$act.name|replace:'this':''|replace:'Make':''|replace:'topic':''|replace:'as':''}></a>  <span class="smallwhite">|</span> 
+	<{/foreach}>
+	<{/if}>
+	
+	<{if count($adminpoll_actions)>0 }>
+	<{foreach item=actpoll from=$adminpoll_actions}>
+	<a href="<{$actpoll.link}>"><{$actpoll.image}> <{$actpoll.name}></a>
+	<{/foreach}>
+	<{/if}>
+
+</div>
+
+<div class="clear"></div>
+
+<{if $mode gt 1}>
+<form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="javascript: if(window.document.forum_posts_admin.op.value &lt; 1){return false;}">
+<{/if}>
+
+<{foreach item=topic_post from=$topic_posts}>
+	<{include file="$newbb_template_path/newbb_thread.html" topic_post=$topic_post mode=$mode}>
+<{/foreach}>
+
+
+<div style="float: right; text-align:right;">
+<{$forum_page_nav}>
+</div>
+
+<div class="clear"></div>
+
+<!--
+<{if $quickreply.show}>
+<div>
+<a href="#threadbottom" onclick="ToggleBlock('qr', this)"> <{$quickreply.icon}></a>
+</div>
+<br />
+<div id="qr" style="display: <{$quickreply.display}>">
+<div><{$quickreply.form}></div>
+</div>
+<br />
+<br />
+<{/if}>
+-->
+<br/><br/>
+<div>
+<div style="float: left; text-align: left;">
+<{foreach item=perm from=$permission_table}>
+<div><{$perm}></div>
+<{/foreach}>
+</div>
+<div style="float: right; text-align: right;">
+<form action="search.php" method="get">
+<input name="term" id="term" type="text" size="15" />
+<input type="hidden" name="forum" id="forum" value="<{$forum_id}>" />
+<input type="hidden" name="sortby" id="sortby" value="p.post_time desc" />
+<input type="hidden" name="since" id="since" value="<{$forum_since}>" />
+<input type="hidden" name="action" id="action" value="yes" />
+<input type="hidden" name="searchin" id="searchin" value="both" />
+<input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>" /><br />
+[<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
+</form><br />
+<{$forum_jumpbox}>
+</div>
+</div>
+<div class="clear"></div>
+
+<br />
+
+<{include file='db:system_notification_select.html'}>
